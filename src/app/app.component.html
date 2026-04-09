@@ -1,0 +1,39 @@
+<div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8" role="main">
+  <section
+    class="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-glow backdrop-blur sm:p-8"
+  >
+    <div
+      class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
+    >
+      <div class="space-y-2">
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-sky-700">
+          Reactive Angular Demo
+        </p>
+        <h1
+          class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl"
+        >
+          Declarative vs Imperative Spells
+        </h1>
+        <p class="max-w-2xl text-sm text-slate-600 sm:text-base">
+          Compare two data flow approaches while browsing spell cards from the
+          D&amp;D API.
+        </p>
+      </div>
+
+      <button
+        class="inline-flex items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-slate-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+        (click)="toggleSpellComponent()"
+      >
+        Toggle View
+      </button>
+    </div>
+
+    <div
+      class="mt-6 rounded-2xl border border-slate-200 bg-white/70 p-4 sm:p-5"
+    >
+      <app-spells [hidden]="spellComponent() === 'imperative'" />
+      <app-spells-imperative [hidden]="spellComponent() === 'declarative'" />
+    </div>
+  </section>
+</div>
+<router-outlet />
