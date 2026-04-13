@@ -22,11 +22,13 @@ export class SpellsImperativeComponent implements OnInit {
 
   spells?: Spells['results'];
   isSpellsLoading = false;
+  spellsError?: string;
 
   selectedSpellUrl?: string;
 
   spellDetails?: SpellDetails;
   isSpellDetailsLoading = false;
+  spellDetailsError?: string;
 
   ngOnInit(): void {
     this.setSpells();
@@ -34,11 +36,15 @@ export class SpellsImperativeComponent implements OnInit {
 
   setSpells(): void {
     this.isSpellsLoading = true;
+    this.spellsError = undefined;
 
     this.spellsService
       .getAll()
       .then((spells) => {
         this.spells = spells?.results;
+      })
+      .catch(() => {
+        this.spellsError = 'Failed to load spells.';
       })
       .finally(() => {
         this.isSpellsLoading = false;
@@ -53,10 +59,14 @@ export class SpellsImperativeComponent implements OnInit {
 
   setSpellDetails(): void {
     this.isSpellDetailsLoading = true;
+    this.spellDetailsError = undefined;
     this.spellsService
       .get(this.selectedSpellUrl!)
       .then((details) => {
         this.spellDetails = details;
+      })
+      .catch(() => {
+        this.spellDetailsError = 'Failed to load spell details.';
       })
       .finally(() => {
         this.isSpellDetailsLoading = false;
