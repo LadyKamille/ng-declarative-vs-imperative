@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
 
+This project uses the [D&D 5e SRD API](https://5e-bits.github.io/docs/api) to demo declarative vs imperative programming in an angular application.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to http://localhost:4200. The application will automatically reload if you change any of the source files.
