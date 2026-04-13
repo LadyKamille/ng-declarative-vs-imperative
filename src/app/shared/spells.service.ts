@@ -37,12 +37,15 @@ export class SpellsService {
 
   private httpClient = inject(HttpClient);
 
-  getAll$(): Observable<Spells> {
-    return this.httpClient.get<Spells>(this.spellsBaseUrl);
+  getAll$(filters?: { level?: number | null; school?: string | null }): Observable<Spells> {
+    const params: Record<string, string> = {};
+    if (filters?.level != null) params['level'] = String(filters.level);
+    if (filters?.school) params['school'] = filters.school;
+    return this.httpClient.get<Spells>(this.spellsBaseUrl, { params });
   }
 
-  getAll(): Promise<Spells> {
-    return lastValueFrom(this.getAll$());
+  getAll(filters?: { level?: number | null; school?: string | null }): Promise<Spells> {
+    return lastValueFrom(this.getAll$(filters));
   }
 
   get$(url: string): Observable<SpellDetails> {

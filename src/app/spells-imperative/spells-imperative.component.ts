@@ -7,11 +7,12 @@ import {
 } from '@angular/core';
 import { SpellDetails, Spells, SpellsService } from '../shared/spells.service';
 import { MarkdownPipe } from '../shared/markdown.pipe';
+import { SpellFiltersComponent } from '../shared/spell-filters/spell-filters.component';
 
 @Component({
   selector: 'app-spells-imperative',
   standalone: true,
-  imports: [MarkdownPipe],
+  imports: [MarkdownPipe, SpellFiltersComponent],
   templateUrl: './spells-imperative.component.html',
   styleUrl: './spells-imperative.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,6 +24,9 @@ export class SpellsImperativeComponent implements OnInit {
   spells?: Spells['results'];
   isSpellsLoading = false;
   spellsError?: string;
+
+  filterLevel?: number;
+  filterSchool?: string;
 
   selectedSpellUrl?: string;
 
@@ -39,7 +43,7 @@ export class SpellsImperativeComponent implements OnInit {
     this.spellsError = undefined;
 
     this.spellsService
-      .getAll()
+      .getAll({ level: this.filterLevel, school: this.filterSchool })
       .then((spells) => {
         this.spells = spells?.results;
       })
@@ -50,6 +54,16 @@ export class SpellsImperativeComponent implements OnInit {
         this.isSpellsLoading = false;
         this.cdr.detectChanges();
       });
+  }
+
+  onLevelChange(level: number | null): void {
+    this.filterLevel = level ?? undefined;
+    this.setSpells();
+  }
+
+  onSchoolChange(school: string | null): void {
+    this.filterSchool = school ?? undefined;
+    this.setSpells();
   }
 
   selectSpell(url: string): void {

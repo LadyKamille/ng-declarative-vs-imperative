@@ -1,0 +1,30 @@
+<div class="mt-3 flex gap-2">
+  <select
+    class="flex-1 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-700"
+    (change)="onLevelChange($event)"
+  >
+    <option value="" [selected]="selectedLevel() === null">All Levels</option>
+    @for (level of levels; track level) {
+      <option [value]="level" [selected]="selectedLevel() === level">{{ level === 0 ? 'Cantrip' : 'Level ' + level }}</option>
+    }
+  </select>
+
+  <select
+    class="flex-1 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-700"
+    (change)="onSchoolChange($event)"
+  >
+    <option value="" [selected]="selectedSchool() === null">All Schools</option>
+    @for (school of schools; track school.index) {
+      <option [value]="school.index" [selected]="selectedSchool() === school.index">{{ school.name }}</option>
+    }
+  </select>
+
+  @if (hasActiveFilters()) {
+    <button
+      class="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-500 transition hover:border-slate-300 hover:text-slate-700"
+      (click)="clearFilters()"
+    >
+      Clear
+    </button>
+  }
+</div>
