@@ -11,7 +11,9 @@
     </h3>
 
     <div class="mt-3 md:min-h-0 md:flex-1 md:overflow-auto md:pr-1">
-      @if (spellDetails$ | async; as details) {
+      @let detailsState = spellDetailsState$ | async;
+
+      @if (detailsState?.data; as details) {
         <div class="space-y-3 text-sm text-slate-700">
           <div
             class="prose prose-sm max-w-none prose-slate leading-relaxed"
@@ -26,6 +28,8 @@
             {{ details.duration }}
           </p>
         </div>
+      } @else if (detailsState?.loading) {
+        <p class="text-sm text-slate-400 animate-pulse">Loading details…</p>
       } @else {
         <p class="text-sm text-slate-500">
           Select a spell to view more details.
@@ -41,10 +45,10 @@
       Spell List
     </h3>
 
-    <ul class="mt-3 grid gap-2 md:min-h-0 md:flex-1 md:overflow-auto md:pr-1">
-      @let spells = spells$ | async;
+    @let spellsState = spellsState$ | async;
 
-      @if (spells?.results; as results) {
+    @if (spellsState?.data?.results; as results) {
+      <ul class="mt-3 grid gap-2 md:min-h-0 md:flex-1 md:overflow-auto md:pr-1">
         @for (spell of results; track spell.index) {
           <li>
             <button
@@ -60,8 +64,14 @@
               {{ spell.name }}
             </button>
           </li>
+        } @empty {
+          <p class="mt-3 text-sm text-slate-500">No spells found.</p>
         }
-      }
-    </ul>
+      </ul>
+    } @else if (spellsState?.loading) {
+      <p class="mt-3 text-sm text-slate-400 animate-pulse">Loading spells…</p>
+    } @else {
+      <p class="mt-3 text-sm text-slate-500">No spells found.</p>
+    }
   </article>
 </div>

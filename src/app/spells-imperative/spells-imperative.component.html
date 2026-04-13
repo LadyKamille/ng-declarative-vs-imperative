@@ -26,6 +26,8 @@
             {{ details.duration }}
           </p>
         </div>
+      } @else if (isSpellDetailsLoading) {
+        <p class="text-sm text-slate-400 animate-pulse">Loading details…</p>
       } @else {
         <p class="text-sm text-slate-500">
           Select a spell to view more details.
@@ -41,8 +43,8 @@
       Spell List
     </h3>
 
-    <ul class="mt-3 grid gap-2 md:min-h-0 md:flex-1 md:overflow-auto md:pr-1">
-      @if (spells; as results) {
+    @if (spells; as results) {
+      <ul class="mt-3 grid gap-2 md:min-h-0 md:flex-1 md:overflow-auto md:pr-1">
         @for (spell of results; track spell.index) {
           <li>
             <button
@@ -59,7 +61,11 @@
             </button>
           </li>
         }
-      }
-    </ul>
+      </ul>
+    } @else if (isSpellsLoading) {
+      <p class="mt-3 text-sm text-slate-400 animate-pulse">Loading spells…</p>
+    } @else {
+      <p class="mt-3 text-sm text-slate-500">No spells found.</p>
+    }
   </article>
 </div>
