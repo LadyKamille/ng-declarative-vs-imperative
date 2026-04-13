@@ -30,6 +30,8 @@
         </div>
       } @else if (detailsState?.loading) {
         <p class="text-sm text-slate-400 animate-pulse">Loading details…</p>
+      } @else if (detailsState?.error) {
+        <p class="text-sm text-red-500">{{ detailsState?.error }}</p>
       } @else {
         <p class="text-sm text-slate-500">
           Select a spell to view more details.
@@ -70,6 +72,8 @@
       </ul>
     } @else if (spellsState?.loading) {
       <p class="mt-3 text-sm text-slate-400 animate-pulse">Loading spells…</p>
+    } @else if (spellsState?.error) {
+      <p class="mt-3 text-sm text-red-500">{{ spellsState?.error }}</p>
     } @else {
       <p class="mt-3 text-sm text-slate-500">No spells found.</p>
     }
