@@ -21,20 +21,29 @@ export class SpellsImperativeComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   spells?: Spells['results'];
+  isSpellsLoading = false;
 
   selectedSpellUrl?: string;
 
   spellDetails?: SpellDetails;
+  isSpellDetailsLoading = false;
 
   ngOnInit(): void {
     this.setSpells();
   }
 
   setSpells(): void {
-    this.spellsService.getAll().subscribe((spells) => {
-      this.spells = spells?.results;
-      this.cdr.detectChanges();
-    });
+    this.isSpellsLoading = true;
+
+    this.spellsService
+      .getAll()
+      .then((spells) => {
+        this.spells = spells?.results;
+      })
+      .finally(() => {
+        this.isSpellsLoading = false;
+        this.cdr.detectChanges();
+      });
   }
 
   selectSpell(url: string): void {
@@ -43,9 +52,15 @@ export class SpellsImperativeComponent implements OnInit {
   }
 
   setSpellDetails(): void {
-    this.spellsService.get(this.selectedSpellUrl!).subscribe((details) => {
-      this.spellDetails = details;
-      this.cdr.detectChanges();
-    });
+    this.isSpellDetailsLoading = true;
+    this.spellsService
+      .get(this.selectedSpellUrl!)
+      .then((details) => {
+        this.spellDetails = details;
+      })
+      .finally(() => {
+        this.isSpellDetailsLoading = false;
+        this.cdr.detectChanges();
+      });
   }
 }

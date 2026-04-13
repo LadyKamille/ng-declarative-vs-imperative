@@ -31,8 +31,11 @@
     <div
       class="mt-6 rounded-2xl border border-slate-200 bg-white/70 p-4 sm:p-5"
     >
-      <app-spells [hidden]="spellComponent() === 'imperative'" />
-      <app-spells-imperative [hidden]="spellComponent() === 'declarative'" />
+      @if (spellComponent() === "declarative") {
+        <app-spells />
+      } @else {
+        <app-spells-imperative />
+      }
     </div>
   </section>
 </div>

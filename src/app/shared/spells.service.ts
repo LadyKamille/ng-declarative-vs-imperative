@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 export interface Spell {
   index: string;
@@ -37,11 +37,19 @@ export class SpellsService {
 
   private httpClient = inject(HttpClient);
 
-  getAll(): Observable<Spells> {
+  getAll$(): Observable<Spells> {
     return this.httpClient.get<Spells>(this.spellsBaseUrl);
   }
 
-  get(url: string): Observable<SpellDetails> {
+  getAll(): Promise<Spells> {
+    return lastValueFrom(this.getAll$());
+  }
+
+  get$(url: string): Observable<SpellDetails> {
     return this.httpClient.get<SpellDetails>(`${this.baseUrl}${url}`);
+  }
+
+  get(url: string): Promise<SpellDetails> {
+    return lastValueFrom(this.get$(url));
   }
 }

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { SpellsService } from '../shared/spells.service';
 import { AsyncPipe } from '@angular/common';
-import { filter, Subject, switchMap, tap } from 'rxjs';
+import { filter, map, startWith, switchMap } from 'rxjs';
 import { MarkdownPipe } from '../shared/markdown.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
 
@@ -21,14 +21,20 @@ import { toObservable } from '@angular/core/rxjs-interop';
 export class SpellsComponent {
   private spellsService = inject(SpellsService);
 
-  readonly spells$ = this.spellsService.getAll();
+  readonly spellsState$ = this.spellsService.getAll$().pipe(
+    map(data => ({ loading: false, data })),
+    startWith({ loading: true, data: null }),
+  );
 
   readonly selectedSpellUrl = signal<string | null>(null);
   readonly selectedSpellUrl$ = toObservable(this.selectedSpellUrl);
 
-  readonly spellDetails$ = this.selectedSpellUrl$.pipe(
+  readonly spellDetailsState$ = this.selectedSpellUrl$.pipe(
     filter((url): url is string => url !== null),
-    switchMap((url) => this.spellsService.get(url)),
+    switchMap(url => this.spellsService.get$(url).pipe(
+      map(data => ({ loading: false, data })),
+      startWith({ loading: true, data: null }),
+    )),
   );
 
   selectSpell(url: string): void {
