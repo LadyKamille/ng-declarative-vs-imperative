@@ -47,10 +47,15 @@
       Spell List
     </h3>
 
+    <app-spell-filters
+      (levelChange)="filterLevel.set($event)"
+      (schoolChange)="filterSchool.set($event)"
+    />
+
     @let spellsState = spellsState$ | async;
 
     @if (spellsState?.data?.results; as results) {
-      <ul class="mt-3 grid gap-2 md:min-h-0 md:flex-1 md:overflow-auto md:pr-1">
+      <ul class="mt-3 grid content-start gap-2 md:min-h-0 md:flex-1 md:overflow-auto md:pr-1">
         @for (spell of results; track spell.index) {
           <li>
             <button
