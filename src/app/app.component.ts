@@ -5,7 +5,6 @@ import { SpellsImperativeComponent } from './spells-imperative/spells-imperative
 import { SpellsExperimentalComponent } from './spells-experimental/spells-experimental.component';
 
 type SpellView = 'declarative' | 'imperative' | 'experimental';
-const VIEW_CYCLE: SpellView[] = ['declarative', 'imperative', 'experimental'];
 
 @Component({
     selector: 'app-root',
@@ -16,10 +15,9 @@ const VIEW_CYCLE: SpellView[] = ['declarative', 'imperative', 'experimental'];
 export class AppComponent {
   spellComponent: WritableSignal<SpellView> = signal('declarative');
 
-  toggleSpellComponent() {
-    this.spellComponent.update((prev) => {
-      const nextIndex = (VIEW_CYCLE.indexOf(prev) + 1) % VIEW_CYCLE.length;
-      return VIEW_CYCLE[nextIndex];
-    });
-  }
+  readonly views: { id: SpellView; label: string }[] = [
+    { id: 'imperative', label: 'Imperative' },
+    { id: 'declarative', label: 'Declarative (RxJS)' },
+    { id: 'experimental', label: 'Resource API' },
+  ];
 }
