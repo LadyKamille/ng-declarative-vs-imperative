@@ -17,7 +17,7 @@ export class AppComponent {
 
   readonly views: { id: SpellView; label: string }[] = [
     { id: 'imperative', label: 'Imperative' },
-    { id: 'declarative', label: 'Declarative (RxJS)' },
-    { id: 'experimental', label: 'Resource API' },
+    { id: 'declarative', label: 'Declarative' },
+    { id: 'experimental', label: 'Resource' },
   ];
 }
