@@ -33,8 +33,10 @@
     >
       @if (spellComponent() === "declarative") {
         <app-spells />
-      } @else {
+      } @else if (spellComponent() === "imperative") {
         <app-spells-imperative />
+      } @else {
+        <app-spells-experimental />
       }
     </div>
   </section>
