@@ -10,12 +10,11 @@ import { MarkdownPipe } from '../shared/markdown.pipe';
 import { SpellFiltersComponent } from '../shared/spell-filters/spell-filters.component';
 
 @Component({
-  selector: 'app-spells-imperative',
-  standalone: true,
-  imports: [MarkdownPipe, SpellFiltersComponent],
-  templateUrl: './spells-imperative.component.html',
-  styleUrl: './spells-imperative.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-spells-imperative',
+    imports: [MarkdownPipe, SpellFiltersComponent],
+    templateUrl: './spells-imperative.component.html',
+    styleUrl: './spells-imperative.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpellsImperativeComponent implements OnInit {
   private spellsService = inject(SpellsService);

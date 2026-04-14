@@ -12,12 +12,11 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { SpellFiltersComponent } from '../shared/spell-filters/spell-filters.component';
 
 @Component({
-  selector: 'app-spells',
-  standalone: true,
-  imports: [AsyncPipe, MarkdownPipe, SpellFiltersComponent],
-  templateUrl: './spells.component.html',
-  styleUrl: './spells.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-spells',
+    imports: [AsyncPipe, MarkdownPipe, SpellFiltersComponent],
+    templateUrl: './spells.component.html',
+    styleUrl: './spells.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpellsComponent {
   private spellsService = inject(SpellsService);

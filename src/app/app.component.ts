@@ -4,11 +4,10 @@ import { SpellsComponent } from './spells/spells.component';
 import { SpellsImperativeComponent } from './spells-imperative/spells-imperative.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, SpellsComponent, SpellsImperativeComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+    selector: 'app-root',
+    imports: [RouterOutlet, SpellsComponent, SpellsImperativeComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent {
   spellComponent: WritableSignal<'declarative' | 'imperative'> =
