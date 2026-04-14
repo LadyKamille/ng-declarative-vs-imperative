@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResourceRequest } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom, Observable } from 'rxjs';
 
@@ -36,6 +36,17 @@ export class SpellsService {
   readonly spellsBaseUrl = 'https://www.dnd5eapi.co/api/2014/spells';
 
   private httpClient = inject(HttpClient);
+
+  getAllRequest(filters?: { level?: number | null; school?: string | null }): HttpResourceRequest {
+    const params: Record<string, string> = {};
+    if (filters?.level != null) params['level'] = String(filters.level);
+    if (filters?.school) params['school'] = filters.school;
+    return { url: this.spellsBaseUrl, params };
+  }
+
+  getRequest(url: string): HttpResourceRequest {
+    return { url: `${this.baseUrl}${url}` };
+  }
 
   getAll$(filters?: { level?: number | null; school?: string | null }): Observable<Spells> {
     const params: Record<string, string> = {};
